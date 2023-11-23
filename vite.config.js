@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/Socket.io': {
+      '/socket.io/socket.io.js': {
         target:'https://servidor-lake.vercel.app',
         ws: true
       }
