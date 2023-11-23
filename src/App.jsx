@@ -1,29 +1,20 @@
 import React, { useEffect } from 'react';
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-const socket = io('https://servidor-lake.vercel.app');
+const socket = io(); // La conexión con el servidor Socket.IO se establecerá a través del proxy configurado en 'vite.config.js'
 
 const App = () => {
   useEffect(() => {
-    // Manejo de eventos y lógica de los sockets
-    socket.on('connect', () => {
-      console.log('Conectado al servidor');
-      
-      // Lógica adicional al establecer la conexión
+    console.log('La conexión fue exitosa :D', socket);
+
+    // Aquí puedes agregar el código para escuchar eventos o enviar mensajes al servidor
+    socket.emit('customEvent', { data: 'Hola, servidor!' });
+
+    socket.on('customResponse', (response) => {
+      console.log('Respuesta del servidor:', response);
     });
 
-    socket.on('disconnect', () => {
-      console.log('Desconectado del servidor');
-      
-      // Lógica adicional al desconectarse
-    });
-
-    // Suscribirse a eventos o enviar mensajes al servidor
-    socket.emit('mensaje', 'Hola servidor', (respuesta) => {
-      console.log('Respuesta del servidor:', respuesta);
-    });
-
-    // Limpiar los eventos al desmontar el componente
+    // Importante: No olvides limpiar los listeners cuando el componente se desmonte
     return () => {
       socket.disconnect();
     };
