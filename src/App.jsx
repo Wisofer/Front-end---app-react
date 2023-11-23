@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 
 
 
-const socket = io("https://servidor-lake.vercel.app")
+const socket = io("/")
 
 const App = () => {
 
